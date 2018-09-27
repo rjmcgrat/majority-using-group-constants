@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN" "http://www.w3.org/TR/REC-html40/loose.dtd">
+<!-- saved from url=(0067)https://www.ics.uci.edu/~dan/class/165/PROJECTS/MAJORITY/index.html -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>CompSci 165 Project</title>
+<!--<base href="http://www.ics.uci.edu/~dan/class/165/PROJECTS/">--><base href=".">
+<style>
+<!--
+body { color:#000000; font:14px Arial, helvetica, sans-serif; >
+-->
+</style>
+</head><body>
+<h2 align="center">CompSci 165 Project #2<br>MAJORITY</h2>
+<h3 align="center"><font color="blue">due May 9 (W week 6)</font></h3>
+
+Write a routine in C that, using as few 4-element queries as possible,
+<br>
+finds the index of an element that is a majority element in a private array of Boolean-valued "marbles",
+or indicates that there is no majority element.
+<p>
+Can you use fewer queries than used by other CS 165 teams?
+<!-- &nbsp; Fewer than what my program uses?
+-->
+</p><p>
+You are required to use the provided
+<a href="http://www.ics.uci.edu/~dan/class/165/PROJECTS/MAJORITY/QCOUNT.c"><tt>QCOUNT()</tt></a>
+subroutine that makes (and counts) element queries.
+
+</p><h3>Requirements</h3>
+	
+<ol>
+<li> Implement a subroutine <tt>int mysub( int n )</tt> to
+   <ul>
+   <li> Define a 4-element array, <tt>myarray</tt>
+   </li><li> Make a sequence of queries, each time invoking <tt>QCOUNT( 1, myarray[] )</tt>
+        <ul>
+        <li> <tt>QCOUNT( 1, myarray[] )</tt> queries the <b>four</b> <tt>marble[]</tt> elements at indices <tt>myarray[0]</tt>, ..., <tt>myarray[3]</tt>
+         <br>( <i>i.e.</i>, the contents of <tt>marble[myarray[0]]</tt>, ... , <tt>marble[myarray[3]]</tt> )
+         <br>and determines the absolute value of the discrepancy between the number of Boolean 1's and the number of Boolean 0's among those four elements
+        </li><li> The return value from invoking <tt>QCOUNT</tt> is
+           <ul>
+           <li>negative — when any of the four indices stored in <tt>myarray</tt> are out of range
+             or if there are any duplicated indices stored in <tt>myarray</tt>
+           </li><li> 0 — when the four <tt>marble</tt> values consist of two Boolean 1's and two Boolean 0's
+           </li><li> 2 — when there are three of one value and one of the other
+           </li><li> 4 — when all four Boolean values are the same
+           </li></ul>
+        </li><li> For example,
+           <ul>
+           <li> if <tt>marble[]</tt> (<small>indexed from 1 to 7</small>) contains the values: <tt>0,1,1,0,0,0,1</tt>
+          <br> and &nbsp; <tt>myarray</tt>[0] = 3, &nbsp; <tt>myarray</tt>[1] = 2, &nbsp; <tt>myarray</tt>[2] = 1, &nbsp; <tt>myarray</tt>[3] = 7
+          </li><li> then invoking <tt>QCOUNT( 1, myarray )</tt> should return 2
+          <br> because the <tt>marble</tt> cells at indices (3,2,1,7) contain values (1,1,0,1)
+          <br> and the two Boolean values (<small><tt>1</tt> and <tt>0</tt></small>) occur three times and one time, giving an absolute discrepancy of 2
+           </li></ul>
+        </li></ul>
+   </li><li> The problem is to determine the location of a majority element,
+        <br> and so your routine's return value will be either
+        <br> &nbsp; &nbsp; &nbsp;
+        (a) an index in the range 1 to <tt>n</tt> of a majority <tt>marble</tt> element,
+        <br> &nbsp; &nbsp; &nbsp;
+            &nbsp; &nbsp; &nbsp; &nbsp;
+            <i>i.e.</i>, a marble element whose value is a majority of the <tt>marble[]</tt> element values, or
+        <br> &nbsp; &nbsp; &nbsp;
+        (b) 0, when there is no majority,
+           <i>i.e.</i>, there are an equal number of marbles having value 0 and having value 1
+        <br> &nbsp; &nbsp; &nbsp;
+        (c) -1, if any errors occurred
+        <ul>
+        <li> Examples
+          <ul>
+          <li>if the <tt>marble</tt> array (<small>indexed from 1 to 7</small>)
+            contains the values: <tt>0,1,1,0,0,0,1</tt>
+           <br>then <tt>0</tt> is the majority value (since there are four 0's and three 1's),
+           <br>and therefore <tt>mysub()</tt> should return
+               any one of the indices: 1,4,5,6
+          </li><li>if the <tt>marble</tt> array (<small>indexed from 1 to 6</small>)
+               contains the values: <tt>1,1,0,0,0,1</tt>
+           <br>then there is no majority value (since there are three 1's and three 0's),
+           <br>and therefore <tt>mysub()</tt> should return 0
+          </li></ul>
+        </li></ul>
+   </li><li> Your <tt>mysub(n)</tt> routine should
+      <ul>
+      <li> be capable of handling values of <tt>n</tt> in the range of 10 to 10000
+      </li><li> be implemented to minimize the <b>average-case</b> number of queries
+      </li></ul>
+   </li></ul>
+<p>
+ </p></li><li> Use the provided <a href="http://www.ics.uci.edu/~dan/class/165/PROJECTS/MAJORITY/MAIN.c">main routine</a> which does the following
+   <ul>
+   <li> Calls the <tt>mysub( n )</tt> routine 10000 times for each of
+       <tt>n</tt> = 17, 18, 19, 20, 200, and 2000
+        <br>and stores the return value in <tt>answer</tt>
+   </li><li> Invokes <tt>QCOUNT( 0, n )</tt> just prior to each call of <tt>mysub()</tt>
+       <ul>
+       <li> This initializes a private array, <tt>marble[]</tt>,
+        that contains <tt>n</tt> random Boolean-valued elements (indexed from 1 to <tt>n</tt>)
+       </li><li> <tt>n</tt> must be at least 10 and at most 10000
+       </li><li> <tt>QCOUNT(0,n)</tt> returns 0 normally, but returns -1 if <tt>n</tt> is out of range
+       </li></ul>
+   </li><li> Invokes <tt>QCOUNT( 2, answer )</tt> after each call of <tt>mysub()</tt>
+        <br>This
+        <ul>
+        <li> checks whether your routine's answer is correct
+        </li><li> returns the number of 4-element queries performed if <tt>answer</tt> is correct
+        </li><li> returns a negative value if <tt>answer</tt> is wrong
+        </li></ul>
+   </li><li> Outputs the worst case and average (to two decimal places)
+        number of 4-element queries performed for each value of <tt>n</tt>
+  </li></ul>
+<p>
+</p></li><li> State the worst case (WC) and average number of 4-element queries performed by
+     your <tt>mysub( n )</tt> routine
+     <br>as a function of <tt>n</tt>, including all constants
+     ( do not use O-notation )
+     <ul>
+       <li> first, on the basis of empirical observations ( including runs using other values of <tt>n</tt> )
+       </li><li> second, on the basis of algorithmic theory (WC, expected WC, and average case)
+       </li><li> justify your statements
+       </li><li> explain any discrepancies between theoretical predictions and empirical observations
+     </li></ul>
+</li></ol>
+
+<h3>Deliverables</h3>
+
+<ul>
+<li> <tt>mysub.c</tt>
+</li><li> If you have any, output produced from runs using other values of <tt>n</tt>
+</li><li> Worst case and average case analysis (statements and justifications)
+</li></ul>
+
+<h3>Evaluation Process</h3>
+
+The grader will perform the following tasks
+<ul>
+<li> Place your <tt>mysub.c</tt> file in his directory
+     that contains the class-supplied files: <tt>MAIN.c</tt> and <tt>QCOUNT.c</tt>
+</li><li> Compile the program on Linux using the command: <tt>gcc MAIN.c -o MAIN</tt>
+</li><li> View the source code (check for malicious or "cheat" code)
+</li><li> Run the program using the command: <tt>MAIN &gt; output</tt>
+</li><li> If the program does not finish execution within three minutes
+     then the grader will abort the execution
+</li><li> Read analysis document
+</li><li> Test whether <tt>mysub</tt> works when <tt>n</tt> = 17, 18, 19, 20, 200, 2000
+</li><li> Compare performance with those of programs from other teams and the Professor
+</li><li> Points awarding <a href="http://www.ics.uci.edu/~dan/class/165/PROJECTS/MAJORITY/Rubric2.html">criteria</a>
+</li></ul>
+
+</body></html>

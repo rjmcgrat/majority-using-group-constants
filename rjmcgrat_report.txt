@@ -1,0 +1,19 @@
+Project 2 Score Report
+Head Member: danhn2
+Second Member: rjmcgrat
+
+Correctness: 60/60
+ 
+
+Code Structure: 5/5
+ 
+
+Analysis: 5.5/10
+ -1 theoretical WC is unclear
+ -2.5 expected WC has no analysis
+ -1 no analysis for the average value of "m"
+
+Efficiency: 22/25
+ Observed Average Case = 878.08
+
+TOTAL: 92.5/100
